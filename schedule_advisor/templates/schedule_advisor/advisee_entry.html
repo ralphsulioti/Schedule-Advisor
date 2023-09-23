@@ -1,0 +1,8 @@
+{% load search_results %}
+
+<li class="list-group-item">
+    <div class="advisee-entry" style="display: flex;justify-content: space-between;flex-direction: row;align-items: center;">
+        <p style="margin: 0;">{{ advisee.get_full_name }} ({{ advisee.username }})</p>
+        {% advisee_can_be_added advisor advisee %}
+    </div>
+</li>

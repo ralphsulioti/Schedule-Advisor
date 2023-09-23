@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex flex-column justify-content-center">
+    <div class="student-schedules">
+        <h1>Student schedules</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.user }}
+        <select name="advisee_id" class="form-select">
+            {% for advisee in advisees %}
+                <option value="{{ advisee.id }}">{{ advisee.get_full_name }} ({{ advisee.username }})</option>
+            {% endfor %}
+        </select>
+        <input class="btn btn-primary m-3 px-5" type="submit" value="View">
+    </form>
+
+    {% for schedule in schedules %}
+        {% if schedule.visible %}
+            <div class="schedule">
+                {% for day in days_of_week %}
+                    <div class="schedule-by-day py-3" id="schedule-{{ day }}">
+                        <h2>{{ day }}</h2>
+                        {% for k, v in schedule_by_day.items %}
+                            {% if k == day %}
+                                {% for cl in v %}
+                                    {% include "schedule_advisor/class_card.html" with result=cl %}
+                                {% empty %}
+                                    <p>No classes on {{ day }}!</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                {% if '-' in schedule_by_day.keys %}
+                    <div class="schedule-by-day py-3" id="schedule-na">
+                        <h2>Other</h2>
+                        {% for k, v in schedule_by_day.items %}
+                            {% if k == '-' %}
+                                {% for cl in v %}
+                                    {% include "schedule_advisor/class_card.html" with result=cl %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            <div class="schedule-approve">
+                <h2>Approval</h2>
+                {% if schedule.approved is None %}
+                    <p>Current status of schedule: <strong>no decision</strong></p>
+                {% elif schedule.approved %}
+                    <p>Current status of schedule: <strong style="color: var(--bs-success);">approved</strong></p>
+                {% else %}
+                    <p>Current status of schedule: <strong style="color: var(--bs-danger);">rejected</strong></p>
+                {% endif %}
+            <form method="post" action="{% url 'approve_schedule' %}">
+                {% csrf_token %}
+                <input type="hidden" name="schedule" value="{{ schedule.id }}" />
+                <label for="decision-status">Approve or reject this student's schedule:</label>
+                <select name="decision" class="form-select" id="decision-status">
+                    <option value="none">No decision</option>
+                    <option value="true">Approved</option>
+                    <option value="false">Rejected</option>
+                </select>
+                <input class="btn btn-primary m-3 px-5" type="submit" value="Submit">
+            </form>
+            </div>
+            </div>
+        {% else %}
+            <p>This schedule is not visible.</p>
+        {% endif %}
+    {% endfor %}
+    </div>
+    <div class="advisees-list">
+        <h1>Your advisees</h1>
+        <ul class="list-group list-group-flush">
+            {% for student in advisees %}
+                    {% include "schedule_advisor/advisee_entry.html" with advisor=user advisee=student %}
+            {% empty %}
+                <p>You have no advisees.</p>
+            {% endfor %}
+        </ul>
+        <div class="advisee-search">
+        <h1>Search advisees</h1>
+            <form method="get">
+                <input type="search" name="q" placeholder="Search students..." id="search" data-toggle="tooltip" data-bs-placement="bottom" title="Filter by first name, last name, and username" aria-label="Search" class="form-control">
+                <input class="btn btn-primary m-3 px-5" type="submit" value="Search">
+            </form>
+            {% if query is not None %}
+                <ul class="list-group list-group-flush">
+                {% if query.count > 0 %}
+                    {% for student in query %}
+                        {% include "schedule_advisor/advisee_entry.html" with advisor=user advisee=student %}
+                    {% endfor %}
+                {% else %}
+                    <p>There are no matching results.</p>
+                {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

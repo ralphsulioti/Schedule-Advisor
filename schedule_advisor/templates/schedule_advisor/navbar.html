@@ -1,0 +1,48 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light"
+     style="
+            border-bottom-width:2px;
+            border-bottom-color: #FF5402;
+            border-bottom-style: solid;
+            ">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand" href="/">
+            <img style="height: 50px; margin-right: 25px;" src="{% static 'schedule_advisor/images/logo.png' %}" alt="Schedule Advisor">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {% if user.is_authenticated %}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'search' %}">Search</a>
+                    </li>
+                    {% if user.is_advisor %}
+                        <li class="nav-item">
+                           <a class="nav-link" href="{% url 'schedules' %}">Advisees</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'schedule' %}">Schedule</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_logout' %}">Log Out</a>
+                    </li>
+                </ul>
+            {% else %}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load account socialaccount %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% load google_auth %}
+
+{% block head_title %}Log Out{% endblock %}
+
+{% block content %}
+    <div style="margin-top: 100px">
+        <h1>Log Out</h1>
+        <div class="py-3">
+        <p>Are you sure you want to sign out?</p>
+        <form class="login" method="POST" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            <button class="primaryAction btn btn-primary" type="submit">Log Out</button>
+        </form>
+        </div>
+    </div>
+{% endblock %}

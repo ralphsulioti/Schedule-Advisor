@@ -1,0 +1,91 @@
+.login-container {
+    margin-top: 100px;
+}
+
+.login label {
+    font-weight: bold;
+    margin-right: 25px;
+}
+
+.login input[type="text"], .login input[type="password"] {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.login input[type="text"] {
+    margin-left: 32px;
+}
+
+.login button {
+    width: 300px;
+    height: 50px;
+    border-radius: 10px !important;
+    margin-top: 10px;
+    transition-duration: 0.3s;
+}
+
+.or-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    margin-top: 12.5px;
+    font-size: 12px;
+}
+
+.or {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+hr {
+    width: 125px;
+}
+
+.google-login {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 15px 15px 15px;
+    margin-top: 10px;
+    width: 300px;
+    border-radius: 10px;
+    transition-duration: 0.3s;
+    color: black;
+    text-decoration: none;
+    background-color: white;
+    border: 1px solid gray;
+}
+
+.google-login:hover {
+  background-color: #E9EBEF;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.google-logo {
+    width: 20px;
+    margin-right: 15px;
+}
+
+.google-login a {
+    color: black;
+    text-decoration: none;
+}
+
+.google-login a:hover {
+    color: black;
+    text-decoration:none;
+}
+
+.not-registered {
+    display: flex;
+    text-align: center;
+    flex-direction: row;
+    margin-top: 25px;
+}

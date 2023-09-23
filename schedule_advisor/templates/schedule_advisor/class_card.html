@@ -1,0 +1,19 @@
+{% load search_results %}
+
+<div class="class-info-box card my-3" id="class-{{ result.class_number }}">
+        <div class="card-body px-4 py-4">
+            <h3 class="card-title">{{ result.name }}</h3>
+            <h4 class="card-subtitle mb-2 text-muted">{{ result.subject }} {{ result.catalog_number }}, section {{ result.class_section }}-{{ result.component }}</h4>
+            {% if result.source_data.topic %}<h5 class="card-title">Topic</h5><p>{{ result.source_data.topic }}</p>{% endif %}
+            {% if result.units %}<h5 class="card-title">Units</h5><p>{{ result.units }} units</p>{% endif %}
+            {% if result.source_data.instructors %}<h5 class="card-title">Instructor{{ result.source_data.instructors|pluralize }}</h5>{% for instructor in result.source_data.instructors %}<p>{{ instructor.name }}</p>{% endfor %}{% endif %}
+            {% if result.source_data.meetings %}<h5 class="card-title">Meeting Time{{ result.source_data.meetings|pluralize }}</h5>{% for meeting in result.source_data.meetings %}<p>{% meeting_string meeting %}</p>{% endfor %}{% endif %}
+            {% if result.source_data.class_capacity %}<h5 class="card-title">Enrollment Status</h5><p>{{ result.source_data.enrollment_available }}/{{ result.source_data.class_capacity }} seats available, {{ result.source_data.wait_tot }} people on waitlist (capacity {{ result.source_data.wait_cap }})</p>{% endif %}
+        </div>
+        {% if user.is_authenticated %}
+            {% if user.is_advisor %}
+            {% else %}
+                {% class_can_be_added user.schedule result %}
+            {% endif %}
+        {% endif %}
+</div>

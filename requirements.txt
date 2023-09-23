@@ -1,0 +1,12 @@
+black
+crispy-bootstrap5
+django
+django-allauth
+django-annoying
+django-bootstrap-v5
+django-crispy-forms
+dj-database-url
+gunicorn
+psycopg2-binary
+requests
+whitenoise

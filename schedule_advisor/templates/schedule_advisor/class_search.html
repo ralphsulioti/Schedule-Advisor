@@ -1,0 +1,23 @@
+{% load search_results %}
+{% load crispy_forms_filters %}
+
+<div class="class-search">
+    <h1>Search for Classes</h1>
+    <div class="class-search-form py-3">
+        <p>Searching classes for <strong>{% current_semester %}</strong>.</p>
+        <form action="/search" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </form>
+    </div>
+    <div class="class-search-results py-3">
+        {% if results %}
+            {% for result in results %}
+                {% include "schedule_advisor/class_card.html" with result=result %}
+            {% empty %}
+                <p>No results could be found.</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

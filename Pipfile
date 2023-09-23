@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+crispy-bootstrap5 = "*"
+django = "*"
+django-allauth = "*"
+django-annoying = "*"
+django-bootstrap-v5 = "*"
+django-crispy-forms = "*"
+dj-database-url = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
+requests = "*"
+whitenoise = "*"
+
+[dev-packages]
+black = "*"
+
+[requires]
+python_version = "3"

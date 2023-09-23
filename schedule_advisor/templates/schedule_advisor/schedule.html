@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="schedule">
+    <h1>Schedule</h1>
+    {% for day in days_of_week %}
+        <div class="schedule-by-day py-3" id="schedule-{{ day }}">
+            <h2>{{ day }}</h2>
+            {% for k, v in schedule_by_day.items %}
+                {% if k == day %}
+                    {% for cl in v %}
+                        {% include "schedule_advisor/class_card.html" with result=cl %}
+                    {% empty %}
+                        <p>No classes on {{ day }}!</p>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+    {% if '-' in schedule_by_day.keys %}
+        <div class="schedule-by-day py-3" id="schedule-na">
+            <h2>Other</h2>
+            {% for k, v in schedule_by_day.items %}
+                {% if k == '-' %}
+                    {% for cl in v %}
+                        {% include "schedule_advisor/class_card.html" with result=cl %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+<div class="advisor">
+    <h1>Approval Status</h1>
+    {% if user.advisor %}
+        <p>Your advisor is {{ user.advisor.get_full_name }} ({{ user.advisor.username }}).</p>
+        {% if schedule.visible %}
+            {% if schedule.approved is None %}
+                <p>Current status of schedule: <strong>no decision</strong></p>
+            {% elif schedule.approved %}
+                <p>Current status of schedule: <strong style="color: var(--bs-success);">approved</strong></p>
+            {% else %}
+                <p>Current status of schedule: <strong style="color: var(--bs-danger);">rejected</strong></p>
+            {% endif %}
+        {% endif %}
+        <form method="post" action="{% url 'visible_schedule' %}">
+            {% csrf_token %}
+            <div class="inline" >
+                <label for="visible-checkbox">Let your advisor see your schedule?</label>
+                {% if user.schedule.visible %}
+                    <input type="checkbox" style="margin-left: 10px; height: 25px; width: 25px;" id="visible-checkbox" name="visible" onchange="this.form.submit();" checked />
+                {% else %}
+                    <input type="checkbox" style="margin-left: 10px; height: 25px; width: 25px;" id="visible-checkbox" name="visible" onchange="this.form.submit();" />
+                {% endif %}
+            </div>
+        </form>
+    {% else %}
+        <p>You do not have an advisor.</p>
+    {% endif %}
+</div>
+{% endblock %}

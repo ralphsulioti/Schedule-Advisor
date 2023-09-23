@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% load google_auth %}
+
+{% block head_title %}{% trans "Log In" %}{% endblock %}
+
+{% block content %}
+
+{% if process == "connect" %}
+<div style="margin-top:100px;">
+  <h1>{% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}</h1>
+</div>
+<div class="mt-4">
+  <p>{% blocktrans with provider.name as provider %}You are about to connect a new third party account from {{ provider }}.{% endblocktrans %}</p>
+</div>
+
+{% else %}
+<div style="margin-top:100px;">
+  <h1>{% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}</h1>
+</div>
+<div class="mt-4">
+  <p>{% blocktrans with provider.name as provider %}You are about to log in using a third party account from {{ provider }}.{% endblocktrans %}</p>
+</div>
+{% endif %}
+<div class="mt-4">
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">{% trans "Continue" %}</button>
+  </form>
+</div>
+
+{% endblock %}

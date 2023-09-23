@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'schedule_advisor/home.css' %}">
+
+    <div class="home" >
+        <div class="home-text">
+            <div class="welcome">Welcome</div>
+            <div class="to">to UVA Schedule Advisor!</div>
+            <div class="barrier"></div>
+            {% if user.is_authenticated %}
+                <a class="register-button" href="{% url 'search' %}">Search classes!</a>
+            {% else %}
+                <a class="register-button" href="{% url 'account_signup' %}">Register now</a>
+            {% endif %}
+        </div>
+        <div class="barrier"></div>
+        <img class="rotunda" src="{% static 'schedule_advisor/images/rotunda.jpg' %}" alt="rotunda">
+    </div>
+{% endblock %}

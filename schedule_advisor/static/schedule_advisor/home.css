@@ -1,0 +1,51 @@
+.home {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 75px;
+    flex-wrap: wrap;
+}
+
+.rotunda {
+    width: 750px;
+}
+
+.home-text {
+    padding: 100px 100px 100px 100px;
+}
+
+.welcome {
+    font-size: 65px;
+    font-weight: bold;
+}
+
+.to {
+    font-size: 24px;
+}
+
+.barrier {
+    width: 2%;
+    height: 40px;
+    margin-right: 25px;
+}
+
+.register-button {
+    background-color: white;
+    padding: 15px 15px 15px 15px;
+    margin-top: 70px;
+    width: 300px;
+    border-radius: 10px;
+    transition-duration: 0.3s;
+    color: #FD5A1E;
+    text-decoration: none;
+    background-color: white;
+    border: 1px solid #FD5A1E;
+}
+
+.register-button:hover {
+  background-color: #FD5A1E;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}

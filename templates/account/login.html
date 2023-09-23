@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load account socialaccount %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% load google_auth %}
+
+{% block head_title %}Log In{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'schedule_advisor/login.css' %}">
+
+    <div class="login-container">
+        <h1>Log In</h1>
+        <div class="py-3">
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+                {# this will require us to build out the actual fields -- email/username, password #}
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                {# we can't reset passwords since we don't have a mail API (yet?) #}
+                {# <p><a class="button secondaryAction" href="{% url 'account_reset_password' %}">Forgot Password?</a></p> #}
+                <button class="primaryAction btn btn-primary" type="submit">Log In</button>
+            </form>
+            <div class="center" >
+                <div class="or-line">
+                    <hr>
+                    <div class="or"> or </div>
+                    <hr>
+                </div>
+                <div class="google-login" >
+                    <a href="/accounts/google/login/?process=login">
+                        <img class="google-logo" src="{% static 'schedule_advisor/images/google_logo.png' %}" alt="google_logo">
+                        Sign in with Google
+                    </a>
+                </div>
+                <div class="not-registered" >
+                    <p style="margin-right: 10px;">Not registered?</p>
+                    <a href="/accounts/signup/" style="color:#007bff !important;">
+                        Sign up!
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

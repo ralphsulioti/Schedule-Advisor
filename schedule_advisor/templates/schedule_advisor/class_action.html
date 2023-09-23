@@ -1,0 +1,22 @@
+<div class="card-actions pb-4">
+    <form method="post" action="{% url 'update_schedule' %}">
+        {% csrf_token %}
+        <input type="hidden" name="semester" value="{{ semester }}" />
+        <input type="hidden" name="class_number" value="{{ class_number }}" />
+        <input type="hidden" name="next" value="{{ request.path }}" />
+        {% if add %}
+            {% if not user.is_adviser %}
+                {% if closed %}
+                    <input class="btn btn-secondary disabled" name="action" type="submit" value="Closed" />
+                {% else %}
+                    <input class="btn btn-primary" name="action" type="submit" value="Add to Schedule" />
+                {% endif %}
+            {% endif %}
+        {% elif delete %}
+            <input class="btn btn-danger" name="action" type="submit" value="Remove from Schedule" />
+        {% else %}
+            {#      This needs a better value.      #}
+            <input class="btn btn-secondary disabled" name="action" type="submit" value="Unavailable" />
+        {% endif %}
+    </form>
+</div>

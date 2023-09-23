@@ -1,0 +1,22 @@
+<div class="advisee-actions" style="display: flex; flex-direction: row; align-items: center">
+    {% if is_advisor_advisee %}
+        {% if approved == True %}
+            <strong class="pe-3" style="color: var(--bs-success);">Schedule approved</strong>
+        {% elif approved == False %}
+            <strong class="pe-3" style="color: var(--bs-danger);">Schedule rejected</strong>
+        {% endif %}
+    {% endif %}
+    <form method="post" action="{% url 'update_advisees' %}">
+        {% csrf_token %}
+        <input type="hidden" name="advisor" value="{{ advisor }}" />
+        <input type="hidden" name="advisee" value="{{ advisee }}" />
+        <input type="hidden" name="next" value="{{ request.path }}" />
+        {% if is_advisor_advisee %}
+            <input class="btn btn-danger" name="action" type="submit" value="Remove" />
+        {% elif has_other_advisor %}
+            <input class="btn btn-secondary disabled" name="action" type="submit" value="Has Advisor" />
+        {% else %}
+            <input class="btn btn-primary" name="action" type="submit" value="Add" />
+        {% endif %}
+    </form>
+</div>
